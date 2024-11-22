@@ -39,10 +39,10 @@ const Travel = () => {
     ]
   };
 
-  const moodboardImages = [
-    "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb",
-    "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+  const foodImages = [
+    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c", // Healthy breakfast bowl
+    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445", // Wood board with pasta
+    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38", // Pizza close-up
   ];
 
   return (
@@ -52,18 +52,18 @@ const Travel = () => {
       </Button>
 
       <div className="max-w-6xl mx-auto space-y-12">
-        {/* Moodboard Section */}
+        {/* Food Gallery Section */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Travel Moodboard</h2>
+          <h2 className="text-2xl font-bold mb-6">Food Gallery</h2>
           <Carousel className="w-full max-w-5xl mx-auto">
             <CarouselContent>
-              {moodboardImages.map((image, index) => (
+              {foodImages.map((image, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <Card className="hover-scale">
                     <CardContent className="p-4">
                       <img
                         src={image}
-                        alt={`Beautiful travel destination ${index + 1}`}
+                        alt={`Delicious food item ${index + 1}`}
                         className="w-full h-48 object-cover rounded-lg"
                       />
                     </CardContent>
