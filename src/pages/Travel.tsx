@@ -16,7 +16,7 @@ const Travel = () => {
   const mockRecipe = {
     title: "Caramelized Shallot Pasta",
     source: "Bon Appetit",
-    image: "/placeholder.svg",
+    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21",
     ingredients: [
       {
         name: "Shallots",
@@ -40,9 +40,9 @@ const Travel = () => {
   };
 
   const moodboardImages = [
-    "/placeholder.svg",
-    "/placeholder.svg",
-    "/placeholder.svg"
+    "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb",
+    "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+    "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
   ];
 
   return (
@@ -63,7 +63,7 @@ const Travel = () => {
                     <CardContent className="p-4">
                       <img
                         src={image}
-                        alt={`Moodboard item ${index + 1}`}
+                        alt={`Beautiful travel destination ${index + 1}`}
                         className="w-full h-48 object-cover rounded-lg"
                       />
                     </CardContent>
