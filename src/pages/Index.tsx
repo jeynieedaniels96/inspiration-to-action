@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { PlusCircle, ArrowRight, Bookmark } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import ShareDialog from "@/components/ShareDialog";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -43,9 +44,15 @@ const Index = () => {
           {features.map((feature) => (
             <Card 
               key={feature.title} 
-              className="glass-card p-6 hover-scale cursor-pointer"
+              className="glass-card p-6 hover-scale cursor-pointer relative"
               onClick={() => navigate(feature.route)}
             >
+              <div className="absolute top-4 right-4 flex gap-2">
+                <ShareDialog 
+                  title={`Check out ${feature.title} organization on TaskFlow!`}
+                  url={window.location.origin + feature.route}
+                />
+              </div>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 {feature.icon}
               </div>
