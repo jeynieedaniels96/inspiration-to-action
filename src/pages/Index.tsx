@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PlusCircle, ArrowRight, Bookmark } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <header className="py-6 px-4 sm:px-6 lg:px-8 animate-fade-in">
@@ -37,8 +40,12 @@ const Index = () => {
         </section>
 
         <section className="mt-24 grid md:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <Card key={feature.title} className="glass-card p-6 hover-scale">
+          {features.map((feature) => (
+            <Card 
+              key={feature.title} 
+              className="glass-card p-6 hover-scale cursor-pointer"
+              onClick={() => navigate(feature.route)}
+            >
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 {feature.icon}
               </div>
@@ -54,19 +61,22 @@ const Index = () => {
 
 const features = [
   {
-    title: "Save & Organize",
-    description: "Import your saved posts from various social media platforms and organize them into collections.",
+    title: "Travel",
+    description: "Organize your travel inspiration and create detailed itineraries from saved posts.",
     icon: <Bookmark className="h-6 w-6 text-primary" />,
+    route: "/travel"
   },
   {
-    title: "Transform Content",
-    description: "Convert saved posts into structured, step-by-step tasks automatically.",
+    title: "Food",
+    description: "Transform saved recipes into step-by-step cooking instructions.",
     icon: <ArrowRight className="h-6 w-6 text-primary" />,
+    route: "/food"
   },
   {
-    title: "Track Progress",
-    description: "Follow your progress as you complete each step of your saved projects.",
+    title: "Fashion",
+    description: "Organize your style inspiration and create outfit collections.",
     icon: <PlusCircle className="h-6 w-6 text-primary" />,
+    route: "/fashion"
   },
 ];
 
