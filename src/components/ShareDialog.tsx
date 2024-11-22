@@ -6,7 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Share2, Facebook, Twitter, LinkedIn, Link2 } from "lucide-react";
+import { Share2, Facebook, Twitter, Linkedin, Link2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface ShareDialogProps {
@@ -34,7 +34,7 @@ const ShareDialog = ({ title, url }: ShareDialogProps) => {
     },
     {
       name: "LinkedIn",
-      icon: <LinkedIn className="h-5 w-5" />,
+      icon: <Linkedin className="h-5 w-5" />,
       onClick: () => {
         window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
         toast.success("Opening LinkedIn share dialog");
