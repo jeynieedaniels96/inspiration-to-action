@@ -16,7 +16,7 @@ const Travel = () => {
   const mockRecipe = {
     title: "Caramelized Shallot Pasta",
     source: "Bon Appetit",
-    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21",
+    image: "https://assets.bonappetit.com/photos/5e8cbe1ec735340008c5e83b/16:9/w_2560%2Cc_limit/Basically-Caramelized-Shallot-Pasta.jpg",
     ingredients: [
       {
         name: "Shallots",
