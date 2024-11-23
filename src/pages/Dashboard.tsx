@@ -1,66 +1,80 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Bell, Heart, Share2, Bookmark } from "lucide-react";
+import { Search, Bell, ArrowRight, Clock, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-const inspirationalContent = [
+const categories = [
   {
     id: 1,
-    title: "Mediterranean Pasta Recipe",
-    category: "Recipes",
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
-    description: "Fresh and light pasta dish perfect for summer evenings",
-    saves: 234,
-    height: "h-[350px]"
+    title: "Recipes",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    count: 12
   },
   {
     id: 2,
-    title: "30-Day Fitness Challenge",
-    category: "Fitness",
-    image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
-    description: "Transform your body with this comprehensive workout plan",
-    saves: 456,
-    height: "h-[450px]"
+    title: "DIY Projects",
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
+    count: 8
   },
   {
     id: 3,
-    title: "DIY Home Decor",
-    category: "Crafts",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-    description: "Beautiful and budget-friendly home decoration ideas",
-    saves: 789,
-    height: "h-[400px]"
+    title: "Fitness Plans",
+    image: "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9",
+    count: 15
   },
   {
     id: 4,
-    title: "Mindful Morning Routine",
-    category: "Lifestyle",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-    description: "Start your day right with these mindful practices",
-    saves: 321,
-    height: "h-[380px]"
+    title: "Others",
+    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
+    count: 5
+  }
+];
+
+const recentPosts = [
+  {
+    id: 1,
+    title: "30-Minute Pasta Recipe",
+    category: "Recipes",
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
+    savedAt: "2 hours ago"
   },
   {
-    id: 5,
-    title: "Urban Photography Tips",
-    category: "Photography",
-    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81",
-    description: "Capture stunning city shots with these pro tips",
-    saves: 567,
-    height: "h-[420px]"
+    id: 2,
+    title: "Home Office Setup Guide",
+    category: "DIY Projects",
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
+    savedAt: "5 hours ago"
+  },
+  {
+    id: 3,
+    title: "Morning Workout Routine",
+    category: "Fitness Plans",
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
+    savedAt: "1 day ago"
+  }
+];
+
+const reminders = [
+  {
+    id: 1,
+    title: "Start meal prep",
+    time: "Today, 6:00 PM",
+    category: "Recipes"
+  },
+  {
+    id: 2,
+    title: "Morning workout",
+    time: "Tomorrow, 7:00 AM",
+    category: "Fitness Plans"
   }
 ];
 
 const Dashboard = () => {
-  const handleSave = (id: number) => {
-    toast.success("Saved to your collection!");
-    console.log("Saved item:", id);
-  };
-
-  const handleShare = (id: number) => {
-    toast.success("Link copied to clipboard!");
-    console.log("Shared item:", id);
+  const handleBreakdown = (postId: number) => {
+    toast.success("Breaking down post into actionable steps...");
+    console.log("Breaking down post:", postId);
   };
 
   return (
@@ -71,65 +85,110 @@ const Dashboard = () => {
           <div className="relative flex-1 max-w-xl">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
             <Input 
-              placeholder="Search for inspiration..." 
+              placeholder="Search saved posts..." 
               className="pl-10 bg-gray-100 border-none"
             />
           </div>
-          <Button variant="outline" size="icon" className="rounded-full">
+          <Button variant="outline" size="icon" className="rounded-full relative">
             <Bell className="h-4 w-4" />
+            <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full" />
           </Button>
         </div>
       </div>
 
-      {/* Content Grid */}
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {inspirationalContent.map((item) => (
-            <Card 
-              key={item.id} 
-              className="break-inside-avoid mb-4 overflow-hidden hover:shadow-xl transition-shadow duration-300 animate-fade-in"
-            >
-              <div className={`relative ${item.height}`}>
-                <img 
-                  src={item.image} 
-                  alt={item.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 group">
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button 
-                      variant="secondary" 
-                      size="sm" 
-                      className="rounded-full bg-white/90 hover:bg-white"
-                      onClick={() => handleSave(item.id)}
-                    >
-                      <Heart className="h-4 w-4 mr-2" />
-                      Save
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="rounded-full bg-white/90 hover:bg-white"
-                      onClick={() => handleShare(item.id)}
-                    >
-                      <Share2 className="h-4 w-4" />
-                    </Button>
+        {/* Categories */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-6">Categories</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {categories.map((category) => (
+              <Card 
+                key={category.id}
+                className="group relative overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+              >
+                <div className="absolute inset-0">
+                  <img 
+                    src={category.image}
+                    alt={category.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
+                </div>
+                <div className="relative p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">{category.title}</h3>
+                  <p className="text-white/80">{category.count} items</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Recent Posts */}
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-semibold mb-6">Recent Saves</h2>
+            <div className="space-y-4">
+              {recentPosts.map((post) => (
+                <Card key={post.id} className="p-4 hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex gap-4">
+                    <img 
+                      src={post.image}
+                      alt={post.title}
+                      className="w-24 h-24 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="font-semibold mb-1">{post.title}</h3>
+                          <p className="text-sm text-gray-500 mb-2">
+                            {post.category} • Saved {post.savedAt}
+                          </p>
+                        </div>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleBreakdown(post.id)}
+                          className="hover-scale"
+                        >
+                          Break It Down
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Reminders */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold">Reminders</h2>
+              <Button variant="ghost" size="sm" className="hover-scale">
+                <Plus className="h-4 w-4 mr-2" />
+                Add New
+              </Button>
+            </div>
+            <ScrollArea className="h-[400px] rounded-lg border bg-white p-4">
+              <div className="space-y-4">
+                {reminders.map((reminder) => (
+                  <Card key={reminder.id} className="p-4 hover:shadow-md transition-shadow duration-300">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1">
+                        <Clock className="h-4 w-4 text-gray-500" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{reminder.title}</h4>
+                        <p className="text-sm text-gray-500">{reminder.time}</p>
+                        <p className="text-xs text-gray-400 mt-1">{reminder.category}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
               </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
-                <p className="text-sm text-gray-600 mb-2">{item.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{item.category}</span>
-                  <span className="text-sm text-gray-500 flex items-center gap-1">
-                    <Bookmark className="h-4 w-4" />
-                    {item.saves}
-                  </span>
-                </div>
-              </div>
-            </Card>
-          ))}
+            </ScrollArea>
+          </div>
         </div>
       </div>
     </div>
