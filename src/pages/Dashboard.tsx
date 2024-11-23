@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Bell, ArrowRight, Clock, Plus } from "lucide-react";
+import { Search, Bell, ArrowRight, Clock, Plus, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
@@ -72,6 +73,8 @@ const reminders = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
   const handleBreakdown = (postId: number) => {
     toast.success("Breaking down post into actionable steps...");
     console.log("Breaking down post:", postId);
@@ -82,12 +85,23 @@ const Dashboard = () => {
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="relative flex-1 max-w-xl">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-            <Input 
-              placeholder="Search saved posts..." 
-              className="pl-10 bg-gray-100 border-none"
-            />
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate('/')}
+              className="hover:bg-gray-100"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="sr-only">Back to home</span>
+            </Button>
+            <div className="relative flex-1 max-w-xl">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input 
+                placeholder="Search saved posts..." 
+                className="pl-10 bg-gray-100 border-none"
+              />
+            </div>
           </div>
           <Button variant="outline" size="icon" className="rounded-full relative">
             <Bell className="h-4 w-4" />
