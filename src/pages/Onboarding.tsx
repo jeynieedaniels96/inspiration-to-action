@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Facebook, Instagram, Pinterest } from "lucide-react";
+import { Facebook, Instagram, Share2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -32,7 +32,7 @@ const SocialConnections = [
   },
   {
     name: "Pinterest",
-    icon: <Pinterest className="h-5 w-5" />,
+    icon: <Share2 className="h-5 w-5" />,
     color: "hover:bg-red-100"
   }
 ];
