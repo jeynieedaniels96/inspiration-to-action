@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Calendar } from "@/components/ui/calendar";
+import { toast } from "sonner";
 import {
   Carousel,
   CarouselContent,
@@ -9,14 +11,24 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 
 const Food = () => {
   const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [hasCooked, setHasCooked] = useState(false);
 
   const mockRecipe = {
     title: "Caramelized Shallot Pasta",
     source: "Bon Appetit",
-    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9",
     ingredients: [
       {
         name: "Shallots",
@@ -36,13 +48,34 @@ const Food = () => {
         marketplace: "Farmers Market",
         price: "$1.99"
       }
+    ],
+    steps: [
+      "Slice shallots thinly and evenly",
+      "Heat olive oil in a large pan over medium heat",
+      "Add shallots and cook until caramelized (about 20 minutes)",
+      "Add minced garlic and cook for 2 more minutes",
+      "Cook pasta according to package instructions",
+      "Combine pasta with caramelized shallots and garlic",
+      "Season with salt and pepper to taste"
     ]
   };
 
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+    if (date) {
+      toast.success(`Reminder set for ${date.toLocaleDateString()}`);
+    }
+  };
+
+  const handleCookingComplete = () => {
+    setHasCooked(true);
+    toast.success("Congratulations on cooking this recipe! 🎉");
+  };
+
   const foodImages = [
-    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c", // Healthy breakfast bowl
-    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445", // Wood board with pasta
-    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38", // Pizza close-up
+    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445",
+    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
   ];
 
   return (
@@ -52,7 +85,6 @@ const Food = () => {
       </Button>
 
       <div className="max-w-6xl mx-auto space-y-12">
-        {/* Food Gallery Section */}
         <section>
           <h2 className="text-2xl font-bold mb-6">Food Gallery</h2>
           <Carousel className="w-full max-w-5xl mx-auto">
@@ -76,9 +108,8 @@ const Food = () => {
           </Carousel>
         </section>
 
-        {/* Recipe Breakdown Demo */}
         <section className="bg-white rounded-xl p-6 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6">Recipe Breakdown Demo</h2>
+          <h2 className="text-2xl font-bold mb-6">Recipe Breakdown</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <img
@@ -92,8 +123,51 @@ const Food = () => {
               </div>
             </div>
             
-            <div className="space-y-4">
-              <h4 className="font-semibold text-lg">Ingredients & Where to Buy</h4>
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-semibold text-lg mb-4">Step by Step Instructions</h4>
+                <ol className="space-y-3">
+                  {mockRecipe.steps.map((step, index) => (
+                    <li key={index} className="flex gap-3">
+                      <span className="font-medium text-primary">{index + 1}.</span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="flex gap-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">Schedule Cooking</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Pick a date to cook</DialogTitle>
+                    </DialogHeader>
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={handleDateSelect}
+                      className="rounded-md border"
+                    />
+                  </DialogContent>
+                </Dialog>
+
+                <Button
+                  variant={hasCooked ? "ghost" : "default"}
+                  onClick={handleCookingComplete}
+                  disabled={hasCooked}
+                >
+                  {hasCooked ? "Recipe Completed! 🎉" : "I Made This!"}
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <h4 className="font-semibold text-lg mb-4">Ingredients & Where to Buy</h4>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {mockRecipe.ingredients.map((ingredient, index) => (
                 <Card key={index} className="p-4">
                   <div className="flex justify-between items-center">
