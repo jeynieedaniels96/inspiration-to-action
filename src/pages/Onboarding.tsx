@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Facebook, Instagram, Share2 } from "lucide-react";
+import { Facebook, Instagram, Share2, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -53,6 +53,14 @@ const Onboarding = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white p-8">
+      <Button 
+        variant="ghost" 
+        onClick={() => navigate('/')} 
+        className="mb-6"
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" /> Back
+      </Button>
+      
       <div className="max-w-4xl mx-auto space-y-8">
         <h1 className="text-4xl font-bold text-center mb-12">Welcome to SavedIdeas</h1>
         
