@@ -26,57 +26,73 @@ const Food = () => {
   const [hasCooked, setHasCooked] = useState(false);
 
   const mockRecipe = {
-    title: "Caramelized Shallot Pasta",
-    source: "Bon Appetit",
+    title: "Creamy Garlic Shrimp Pasta",
+    source: "Instagram Recipe",
     image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9",
     ingredients: [
       {
-        name: "Shallots",
-        amount: "6 large",
+        name: "Shrimp",
+        amount: "1 pound",
         marketplace: "Whole Foods Market",
-        price: "$3.99"
+        price: "$15.99",
+        link: "https://www.wholefoodsmarket.com/seafood"
       },
       {
-        name: "Pasta",
+        name: "Fettuccine Pasta",
         amount: "1 pound",
+        marketplace: "Trader Joe's",
+        price: "$2.99",
+        link: "https://www.traderjoes.com/pasta"
+      },
+      {
+        name: "Heavy Cream",
+        amount: "2 cups",
         marketplace: "Local Grocery",
-        price: "$2.99"
+        price: "$4.99",
+        link: "https://www.safeway.com/dairy"
       },
       {
         name: "Garlic",
-        amount: "4 cloves",
+        amount: "6 cloves",
         marketplace: "Farmers Market",
-        price: "$1.99"
+        price: "$1.99",
+        link: "https://www.localfarmersmarket.com"
       }
     ],
     steps: [
-      "Slice shallots thinly and evenly",
-      "Heat olive oil in a large pan over medium heat",
-      "Add shallots and cook until caramelized (about 20 minutes)",
-      "Add minced garlic and cook for 2 more minutes",
+      "Clean and devein the shrimp",
       "Cook pasta according to package instructions",
-      "Combine pasta with caramelized shallots and garlic",
-      "Season with salt and pepper to taste"
+      "Sauté garlic in olive oil until fragrant",
+      "Add shrimp and cook until pink",
+      "Pour in heavy cream and simmer",
+      "Combine with pasta and season to taste",
+      "Garnish with parsley and serve hot"
     ]
   };
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
-      toast.success(`Reminder set for ${date.toLocaleDateString()}`);
+      const formattedDate = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      toast.success(`Dinner date scheduled for ${formattedDate}! 🗓️`);
+      console.log("Date scheduled:", date);
     }
   };
 
   const handleCookingComplete = () => {
     setHasCooked(true);
-    toast.success("Congratulations on cooking this recipe! 🎉");
+    toast.success("Recipe saved to your collection! 🎉");
   };
 
-  const foodImages = [
-    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445",
-    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
-  ];
+  const handleIngredientClick = (link: string) => {
+    window.open(link, '_blank');
+    toast.info("Opening store website in a new tab 🛒");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
@@ -85,31 +101,8 @@ const Food = () => {
       </Button>
 
       <div className="max-w-6xl mx-auto space-y-12">
-        <section>
-          <h2 className="text-2xl font-bold mb-6">Food Gallery</h2>
-          <Carousel className="w-full max-w-5xl mx-auto">
-            <CarouselContent>
-              {foodImages.map((image, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <Card className="hover-scale">
-                    <CardContent className="p-4">
-                      <img
-                        src={image}
-                        alt={`Delicious food item ${index + 1}`}
-                        className="w-full h-48 object-cover rounded-lg"
-                      />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </section>
-
         <section className="bg-white rounded-xl p-6 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6">Recipe Breakdown</h2>
+          <h2 className="text-2xl font-bold mb-6">Recipe Details</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <img
@@ -139,11 +132,11 @@ const Food = () => {
               <div className="flex gap-4">
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline">Schedule Cooking</Button>
+                    <Button variant="outline">Schedule Date Night 🗓️</Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Pick a date to cook</DialogTitle>
+                      <DialogTitle>Pick your date night</DialogTitle>
                     </DialogHeader>
                     <Calendar
                       mode="single"
@@ -159,17 +152,21 @@ const Food = () => {
                   onClick={handleCookingComplete}
                   disabled={hasCooked}
                 >
-                  {hasCooked ? "Recipe Completed! 🎉" : "I Made This!"}
+                  {hasCooked ? "Saved to Collection! 🎉" : "Save Recipe"}
                 </Button>
               </div>
             </div>
           </div>
 
           <div className="mt-8">
-            <h4 className="font-semibold text-lg mb-4">Ingredients & Where to Buy</h4>
+            <h4 className="font-semibold text-lg mb-4">Shopping List & Where to Buy</h4>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {mockRecipe.ingredients.map((ingredient, index) => (
-                <Card key={index} className="p-4">
+                <Card 
+                  key={index} 
+                  className="p-4 cursor-pointer hover:shadow-md transition-all"
+                  onClick={() => handleIngredientClick(ingredient.link)}
+                >
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="font-medium">{ingredient.name}</p>
