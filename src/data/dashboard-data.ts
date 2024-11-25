@@ -28,20 +28,27 @@ export const categories = [
 export const recentPosts = [
   {
     id: 1,
-    title: "Caramelized Shallot Pasta",
+    title: "Creamy Garlic Shrimp Pasta",
     category: "Food",
     savedAt: "2 hours ago",
     image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9"
   },
   {
     id: 2,
+    title: "Caramelized Shallot Pasta",
+    category: "Food",
+    savedAt: "Yesterday",
+    image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601"
+  },
+  {
+    id: 3,
     title: "Weekend in Paris",
     category: "Travel",
     savedAt: "Yesterday",
     image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34"
   },
   {
-    id: 3,
+    id: 4,
     title: "Summer Collection 2024",
     category: "Fashion",
     savedAt: "3 days ago",
